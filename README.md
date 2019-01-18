@@ -1,6 +1,34 @@
 # ribbon
 
 A Ribbon decoration on a widget.
+![](screenshot/s1.png)
+
+use a Ribbon to decorate a Widget such as container,card...etc.
+
+no clip apply to ribbon title,so check the title length
+
+Installing:
+In your pubspec.yaml
+dependencies:
+  ribbon: ^0.0.1
+  
+Example Usage:
+import 'package:ribbon/ribbon.dart';
+
+Ribbon(
+  nearLength: nearLength,
+  farLength: farLength,
+  title: 'New!',
+  titleStyle: TextStyle(
+                  color: Colors.greenAccent,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+  color: Colors.redAccent,
+  location: location,
+  child: )
+
+
+
 
 ## Getting Started
 
