@@ -1,6 +1,6 @@
 # ribbon
 
-A new Flutter package project.
+A Ribbon decoration on a widget.
 
 ## Getting Started
 

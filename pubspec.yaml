@@ -1,8 +1,8 @@
 name: ribbon
-description: A new Flutter package project.
+description: A Ribbon Decoration on a widget.
 version: 0.0.1
-author:
-homepage:
+author: ni-jj
+homepage: https://github.com/ni-jj/flutter-ribbon.git
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
