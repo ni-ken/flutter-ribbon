@@ -23,7 +23,7 @@ class Ribbon extends StatelessWidget {
   final Color color;
   final TextStyle titleStyle;
   final RibbonLocation location;
-  final Widget child;
+  final Widget? child;
   const Ribbon(
       {Key? key,
       required this.nearLength,
@@ -53,10 +53,10 @@ class Ribbon extends StatelessWidget {
 class _RibbonPainter extends CustomPainter {
   double nearLength;
   double farLength;
-  final String title;
-  final Color color;
-  final TextStyle titleStyle;
-  final RibbonLocation location;
+  final String? title;
+  final Color? color;
+  final TextStyle? titleStyle;
+  final RibbonLocation? location;
   bool initialized = false;
   late TextPainter textPainter;
   late Paint paintRibbon;
@@ -115,7 +115,7 @@ class _RibbonPainter extends CustomPainter {
         textDirection: TextDirection.ltr);
     textPainter.layout();
     paintRibbon = Paint()
-      ..color = color
+      ..color = color ?? Colors.black
       ..style = PaintingStyle.fill;
     offsetTitle = Offset(-textPainter.width / 2, -textPainter.height / 2);
     rotateRibbon = _rotation;
@@ -128,16 +128,6 @@ class _RibbonPainter extends CustomPainter {
     List<Offset> vec = [];
     if (size.width <= size.height) {
       switch (location) {
-        case RibbonLocation.topStart:
-          path.moveTo(nearLength, 0);
-          vec.add(Offset(nearLength, 0));
-          path.lineTo(farLength, 0);
-          vec.add(Offset(farLength, 0));
-          path.lineTo(0, farLength);
-          vec.add(Offset(0, farLength));
-          path.lineTo(0, nearLength);
-          vec.add(Offset(0, nearLength));
-          break;
         case RibbonLocation.topEnd:
           path.moveTo(size.width - nearLength, 0);
           vec.add(Offset(size.width - nearLength, 0));
@@ -168,33 +158,18 @@ class _RibbonPainter extends CustomPainter {
           path.lineTo(size.width, size.height - nearLength);
           vec.add(Offset(size.width, size.height - nearLength));
           break;
-      }
-    } else {
-      switch (location) {
-        case RibbonLocation.topStart:
+        default:
           path.moveTo(nearLength, 0);
           vec.add(Offset(nearLength, 0));
           path.lineTo(farLength, 0);
           vec.add(Offset(farLength, 0));
-          if (farLength <= size.height) {
-            path.lineTo(0, farLength);
-            vec.add(Offset(0, farLength));
-            path.lineTo(0, nearLength);
-            vec.add(Offset(0, nearLength));
-          } else {
-            path.lineTo(farLength - size.height, size.height);
-            vec.add(Offset(farLength - size.height, size.height));
-            if (nearLength <= size.height) {
-              path.lineTo(0, size.height);
-              vec.add(Offset(0, size.height));
-              path.lineTo(0, nearLength);
-              vec.add(Offset(0, nearLength));
-            } else {
-              path.lineTo(nearLength - size.height, size.height);
-              vec.add(Offset(nearLength - size.height, size.height));
-            }
-          }
-          break;
+          path.lineTo(0, farLength);
+          vec.add(Offset(0, farLength));
+          path.lineTo(0, nearLength);
+          vec.add(Offset(0, nearLength));
+      }
+    } else {
+      switch (location) {
         case RibbonLocation.topEnd:
           path.moveTo(size.width - nearLength, 0);
           vec.add(Offset(size.width - nearLength, 0));
@@ -269,6 +244,29 @@ class _RibbonPainter extends CustomPainter {
             }
           }
           break;
+        default:
+          path.moveTo(nearLength, 0);
+          vec.add(Offset(nearLength, 0));
+          path.lineTo(farLength, 0);
+          vec.add(Offset(farLength, 0));
+          if (farLength <= size.height) {
+            path.lineTo(0, farLength);
+            vec.add(Offset(0, farLength));
+            path.lineTo(0, nearLength);
+            vec.add(Offset(0, nearLength));
+          } else {
+            path.lineTo(farLength - size.height, size.height);
+            vec.add(Offset(farLength - size.height, size.height));
+            if (nearLength <= size.height) {
+              path.lineTo(0, size.height);
+              vec.add(Offset(0, size.height));
+              path.lineTo(0, nearLength);
+              vec.add(Offset(0, nearLength));
+            } else {
+              path.lineTo(nearLength - size.height, size.height);
+              vec.add(Offset(nearLength - size.height, size.height));
+            }
+          }
       }
     }
     path.close();
@@ -288,6 +286,8 @@ class _RibbonPainter extends CustomPainter {
         return math.pi / 4;
       case RibbonLocation.bottomEnd:
         return -math.pi / 4;
+      default:
+        return 0;
     }
   }
 
