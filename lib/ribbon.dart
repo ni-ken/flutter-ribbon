@@ -32,7 +32,7 @@ class Ribbon extends StatelessWidget {
       this.titleStyle = _kTextStyle,
       this.color = Colors.white,
       this.location = RibbonLocation.topStart,
-      this.child})
+      required this.child})
       : super(key: key);
 
   @override
@@ -71,12 +71,12 @@ class _RibbonPainter extends CustomPainter {
     blurRadius: 6.0,
   );
   _RibbonPainter(
-      {this.nearLength = 0,
-      this.farLength = 0,
-      this.title,
-      this.titleStyle,
-      this.color,
-      this.location});
+      {required this.nearLength,
+      required this.farLength,
+      required this.title,
+      required this.titleStyle,
+      required this.color,
+      required this.location});
   @override
   void paint(Canvas canvas, Size size) {
     if (!initialized) _initializ(size);
@@ -292,7 +292,7 @@ class _RibbonPainter extends CustomPainter {
   }
 
   Offset _center(List<Offset> vecs) {
-    double sum_x = 0, sum_y = 0, sum_s = 0;
+    double sumX = 0, sumY = 0, sumS = 0;
     double x1 = vecs[0].dx;
     double y1 = vecs[0].dy;
     double x2 = vecs[1].dx;
@@ -302,14 +302,14 @@ class _RibbonPainter extends CustomPainter {
       x3 = vecs[i].dx;
       y3 = vecs[i].dy;
       double s = ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2.0;
-      sum_x += (x1 + x2 + x3) * s;
-      sum_y += (y1 + y2 + y3) * s;
-      sum_s += s;
+      sumX += (x1 + x2 + x3) * s;
+      sumY += (y1 + y2 + y3) * s;
+      sumS += s;
       x2 = x3;
       y2 = y3;
     }
-    double cx = sum_x / sum_s / 3.0;
-    double cy = sum_y / sum_s / 3.0;
+    double cx = sumX / sumS / 3.0;
+    double cy = sumY / sumS / 3.0;
     return Offset(cx, cy);
   }
 }
